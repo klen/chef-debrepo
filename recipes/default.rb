@@ -12,22 +12,30 @@ package "apt-utils"
 package "dpkg-dev"
 
 packages_dir = "#{ node[:debrepo][:source_dir] }/#{ node[:debrepo][:name] }" 
+packages_user = node[:debrepo][:nginx_proxy] ? node[:nginx][:user] : "root"
+packages_group = node[:debrepo][:nginx_proxy] ? node[:nginx][:user] : "root"
 
 # Create directory for deb packages
 directory packages_dir do
-    user node[:nginx][:user]
-    group node[:nginx][:user]
+    user packages_user
+    group packages_group
+    recursive true
 end
 
 template "#{ node[:debrepo][:source_dir] }/autorepo" do
     source "autorepo.erb"
-    user node[:nginx][:user]
+    user packages_user
     mode 00777
+    variables (
+        user => packages_user,
+        group => packages_group,
+        name => node[:debrepo][:name]
+    )
 end
 
 execute "scan" do
     command "#{ node[:debrepo][:source_dir]  }/autorepo"
-    user node[:nginx][:user]
+    user packages_user
     cwd node[:debrepo][:source_dir]
 end
 
@@ -36,8 +44,6 @@ if node[:debrepo][:nginx_proxy]
     # Enable site
     template "#{node[:nginx][:directories][:conf_dir]}/sites-available/debrepo.conf" do
     source      "nginx.conf.erb"
-    owner       'root'
-    group       'root'
     mode        '0644'
 
     if File.exists?("#{node[:nginx][:directories][:conf_dir]}/sites-enabled/debrepo.conf")
