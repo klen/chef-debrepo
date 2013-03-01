@@ -1,0 +1,4 @@
+#!/bin/sh
+
+dpkg-scanpackages <%= node[:debrepo][:name] %> /dev/null | gzip -9c > <%= node[:debrepo][:name] %>/Packages.gz
+dpkg-scansources  <%= node[:debrepo][:name] %> /dev/null | gzip -9c > <%= node[:debrepo][:name] %>/Sources.gz

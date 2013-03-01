@@ -1,0 +1,12 @@
+server {
+
+    listen 80;
+
+    server_name deb.multichannel.net;
+
+    location /<%= node[:debrepo][:name] %> {
+        root <%= node[:debrepo][:source_dir] %>;
+        autoindex on;
+    }
+
+}
