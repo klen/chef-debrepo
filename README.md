@@ -21,6 +21,7 @@ Cookbooks
 Attributes
 ==========
 
+* `node['debrepo']['host']` -- host of your repository;
 * `node['debrepo']['name']` -- name of repository;
 * `node['debrepo']['source_dir']` -- directory for repository;
 * `node['debrepo']['nginx_proxy']` -- Enable http server;
