@@ -23,6 +23,7 @@ Attributes
 
 * `node['debrepo']['name']` -- name of repository;
 * `node['debrepo']['source_dir']` -- directory for repository;
+* `node['debrepo']['nginx_proxy']` -- Enable http server;
 
 
 Usage
@@ -50,6 +51,11 @@ For remote usage:
 ```
 deb http://<host_name>  <name>/
 ```
+
+Append package
+--------------
+
+Just copy your package to <source_dir/<name> and run <source_dir>/autorepo for rescan packages.
 
 
 Contributing
