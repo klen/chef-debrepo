@@ -1,5 +1,11 @@
 #!/bin/sh
 
+mv build/*.deb <%= name %>/. 2>/dev/null
+mv build/*.build <%= name %>/.  2>/dev/null
+mv build/*.changes <%= name %>/. 2>/dev/null
+mv build/*.dcs <%= name %>/. 2>/dev/null
+mv build/*.gz <%= name %>/. 2>/dev/null
+
 dpkg-scanpackages <%= @name %> /dev/null | gzip -9c > <%= @name %>/Packages.gz
 dpkg-scansources  <%= @name %> /dev/null | gzip -9c > <%= @name %>/Sources.gz
 
