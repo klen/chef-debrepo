@@ -26,7 +26,7 @@ end
 # Directory for makes builds
 directory "#{ node[:debrepo][:source_dir] }/build" do
     group "sudo"
-    mode 770
+    mode 00770
     recursive true
 end
 
