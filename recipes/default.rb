@@ -26,7 +26,7 @@ template "#{ node[:debrepo][:source_dir] }/autorepo" do
     source "autorepo.erb"
     user packages_user
     mode 00777
-    variables (
+    variables(
         :user => packages_user,
         :group => packages_group,
         :name => node[:debrepo][:name]
