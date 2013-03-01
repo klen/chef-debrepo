@@ -2,9 +2,9 @@ server {
 
     listen 80;
 
-    <%= if node[:debrepo][:host] %>
+    <% if node[:debrepo][:host] %>
     server_name <%= node[:debrepo][:host] %>;
-    <%= end %>
+    <% end %>
 
     location /<%= node[:debrepo][:name] %> {
         root <%= node[:debrepo][:source_dir] %>;
