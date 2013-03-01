@@ -10,6 +10,7 @@ include_recipe "nginx"
 # Setup packages
 package "apt-utils"
 package "dpkg-dev"
+package "devscripts"
 
 packages_dir = "#{ node[:debrepo][:source_dir] }/#{ node[:debrepo][:name] }" 
 packages_user = node[:debrepo][:nginx_proxy] ? node[:nginx][:user] : "root"
