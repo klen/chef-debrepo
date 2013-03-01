@@ -35,7 +35,6 @@ end
 
 execute "scan" do
     command "#{ node[:debrepo][:source_dir]  }/autorepo"
-    user packages_user
     cwd node[:debrepo][:source_dir]
 end
 
