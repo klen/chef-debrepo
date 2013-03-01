@@ -23,6 +23,13 @@ directory packages_dir do
     recursive true
 end
 
+# Directory for makes builds
+directory "#{ node[:debrepo][:source_dir] }/build" do
+    group "sudo"
+    mode 770
+    recursive true
+end
+
 template "#{ node[:debrepo][:source_dir] }/autorepo" do
     source "autorepo.erb"
     user packages_user
