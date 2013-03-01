@@ -2,7 +2,9 @@ server {
 
     listen 80;
 
-    server_name deb.multichannel.net;
+    <%= if node[:debrepo][:host] %>
+    server_name <%= node[:debrepo][:host] %>;
+    <%= end %>
 
     location /<%= node[:debrepo][:name] %> {
         root <%= node[:debrepo][:source_dir] %>;
