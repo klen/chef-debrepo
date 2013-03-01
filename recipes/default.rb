@@ -31,18 +31,28 @@ execute "scan" do
     cwd node[:debrepo][:source_dir]
 end
 
-# Enable site
-template "#{node[:nginx][:directories][:conf_dir]}/sites-available/debrepo.conf" do
-  source      "nginx.conf.erb"
-  owner       'root'
-  group       'root'
-  mode        '0644'
+if node[:debrepo][:nginx_proxy]
+    
+    # Enable site
+    template "#{node[:nginx][:directories][:conf_dir]}/sites-available/debrepo.conf" do
+    source      "nginx.conf.erb"
+    owner       'root'
+    group       'root'
+    mode        '0644'
 
-  if File.exists?("#{node[:nginx][:directories][:conf_dir]}/sites-enabled/debrepo.conf")
-    notifies  :restart, 'service[nginx]'
-  end
-end
+    if File.exists?("#{node[:nginx][:directories][:conf_dir]}/sites-enabled/debrepo.conf")
+        notifies  :restart, 'service[nginx]'
+    end
+    end
 
-nginx_site "debrepo" do
-    enable true
+    nginx_site "debrepo" do
+        enable true
+    end
+
+else
+
+    nginx_site "debrepo" do
+        disable true
+    end
+
 end
