@@ -5,19 +5,21 @@
 	exit 1
 }
 
-[ -f build/*.deb ] && {
+[ -f <%= @source_dir %>/build/*.deb ] && {
 
     echo "Find packages copy to repository."
 
-    mv build/*.deb <%= @name %>/. 2>/dev/null
-    mv build/*.build <%= @name %>/.  2>/dev/null
-    mv build/*.changes <%= @name %>/. 2>/dev/null
-    mv build/*.dsc <%= @name %>/. 2>/dev/null
-    mv build/*.gz <%= @name %>/. 2>/dev/null
+    mv <%= @source_dir %>/build/*.deb <%= @source_dir %>/<%= @name %>/. 2>/dev/null
+    mv <%= @source_dir %>/build/*.build <%= @source_dir %>/<%= @name %>/.  2>/dev/null
+    mv <%= @source_dir %>/build/*.changes <%= @source_dir %>/<%= @name %>/. 2>/dev/null
+    mv <%= @source_dir %>/build/*.dsc <%= @source_dir %>/<%= @name %>/. 2>/dev/null
+    mv <%= @source_dir %>/build/*.gz <%= @source_dir %>/<%= @name %>/. 2>/dev/null
 
 }
 
-dpkg-scanpackages <%= @name %> /dev/null | gzip -9c > <%= @name %>/Packages.gz
-dpkg-scansources  <%= @name %> /dev/null | gzip -9c > <%= @name %>/Sources.gz
+cd <%= @source_dir %> && {
+    dpkg-scanpackages <%= @name %> /dev/null | gzip -9c > <%= @name %>/Packages.gz
+    dpkg-scansources  <%= @name %> /dev/null | gzip -9c > <%= @name %>/Sources.gz
+}
 
-chown -R <%= @user %>:<%= @group %> <%= @name %>
+chown -R <%= @user %>:<%= @group %> <%= @source_dir %>/<%= @name %>
