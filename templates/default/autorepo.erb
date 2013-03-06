@@ -17,7 +17,9 @@
 
 }
 
-dpkg-scanpackages <%= @source_dir %>/<%= @name %> /dev/null | gzip -9c > <%= @source_dir %>/<%= @name %>/Packages.gz
-dpkg-scansources  <%= @source_dir %>/<%= @name %> /dev/null | gzip -9c > <%= @source_dir %>/<%= @name %>/Sources.gz
+cd <%= @source_dir %> && {
+    dpkg-scanpackages <%= @name %> /dev/null | gzip -9c > <%= @name %>/Packages.gz
+    dpkg-scansources  <%= @name %> /dev/null | gzip -9c > <%= @name %>/Sources.gz
+}
 
 chown -R <%= @user %>:<%= @group %> <%= @source_dir %>/<%= @name %>
